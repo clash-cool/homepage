@@ -1,5 +1,9 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import { ref } from 'vue'
+import api, { apiSetting } from './api'
+
+const version = ref(null)
+api.version().then((v) => (version.value = v))
 </script>
 
 <template>
@@ -7,11 +11,11 @@ import HelloWorld from './components/HelloWorld.vue'
     <a href="https://vitejs.dev" target="_blank">
       <img src="/logo.svg" class="logo" alt="Vite logo" />
     </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
   </div>
-  <HelloWorld msg="Vite + Vue" />
+  <div>
+    {{ apiSetting }}
+    {{  version }}
+  </div>
 </template>
 
 <style scoped>
