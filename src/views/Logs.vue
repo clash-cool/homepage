@@ -36,6 +36,8 @@ onUpdated(() => nextTick(() => {
 .console {
   height: 400px;
   overflow-y: scroll;
+  padding: 10px;
+  background-color: white;
 
   p {
     margin: 5px 0;
@@ -58,5 +60,9 @@ onUpdated(() => nextTick(() => {
       color: red;
     }
   }
+}
+
+.nut-theme-dark .console {
+  background-color: black;
 }
 </style>
