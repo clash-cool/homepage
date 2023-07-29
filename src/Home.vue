@@ -18,7 +18,7 @@ const switchChange = (v) => {
     <div class="nav">
       <a><img src="/logo.svg" class="logo" alt="Vite logo" /></a>
       <ul class="links">
-        <li v-for="page of routes" :class="{ active: version }">
+        <li v-for="page of routes" :class="{ active: page.path === $route.path }">
           <a :href="`#${page.path}`">{{page.name}}</a>
         </li>
       </ul>
@@ -51,7 +51,7 @@ const switchChange = (v) => {
   margin: 0 auto;
 
   .nav {
-    width: 180px;
+    width: 140px;
     text-align: center;
   }
 
@@ -66,6 +66,7 @@ const switchChange = (v) => {
   margin: 0;
 
   li {
+    border-radius: 10px;
     padding: 0.5em 0;
 
     a {
@@ -73,6 +74,13 @@ const switchChange = (v) => {
       text-decoration: none;
       &:hover {
         text-decoration: underline;
+      }
+    }
+
+    &.active {
+      background-color: #4e8ec3;
+      a {
+        color: #eee;
       }
     }
   }
