@@ -41,7 +41,7 @@ const switchChange = (v) => {
 <style scoped lang="scss">
 .container {
   display: flex;
-  gap: 10px;
+  gap: 30px;
   flex-direction: row;
   align-items: center;
   justify-content: center;
