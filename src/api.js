@@ -1,7 +1,6 @@
-import { ref, watch } from 'vue'
+import { localStorageRef } from './util'
 
-export const apiSetting = ref(JSON.parse(localStorage.getItem('clash.api.setting') || 'null'))
-watch(apiSetting, (val) => { localStorage.setItem('clash.api.setting', JSON.stringify(val)) })
+export const apiSetting = localStorageRef('clash.api.setting')
 
 async function fetchJson(url, opts = {}) {
   if (apiSetting.value) {
