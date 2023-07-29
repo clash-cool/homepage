@@ -1,7 +1,7 @@
 <script setup>
 import _ from 'lodash'
 import { ref, onBeforeUpdate, onUpdated, nextTick } from 'vue'
-import { logs } from '../api'
+import { logs } from '../api/logs'
 
 function numberFormat(number) {
   const str = number.toString()
