@@ -1,6 +1,6 @@
 <script setup>
 import _ from 'lodash'
-import { ref, onBeforeUpdate, onUpdated, nextTick } from 'vue'
+import { ref, onMounted, onBeforeUpdate, onUpdated, nextTick } from 'vue'
 import { logs } from '../api/logs'
 
 function numberFormat(number) {
@@ -23,6 +23,10 @@ onBeforeUpdate(() => {
 onUpdated(() => nextTick(() => {
   if (dom.value && shouldScroll) dom.value.scrollTop = dom.value.scrollHeight
 }))
+
+onMounted(() => {
+  dom.value.scrollTop = dom.value.scrollHeight
+})
 </script>
 
 <template>
