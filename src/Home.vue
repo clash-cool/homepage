@@ -47,7 +47,7 @@ const switchChange = (v) => {
   justify-content: center;
   height: 100vh;
   width: 100vw;
-  max-width: 768px;
+  max-width: 960px;
   margin: 0 auto;
 
   .nav {
