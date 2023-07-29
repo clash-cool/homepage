@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import api from './api'
 import { theme } from './settings'
+import { routes } from './routes'
 
 const version = ref(null)
 api.version().then((v) => (version.value = v))
@@ -15,26 +16,24 @@ const switchChange = (v) => {
 <template>
   <div class="container">
     <div class="nav">
-      <a href="https://vitejs.dev" target="_blank">
-        <img src="/logo.svg" class="logo" alt="Vite logo" />
-      </a>
-      <nut-cell-group>
-        <nut-cell title="Home" to="/" />
-        <nut-cell title="About" to="/about" />
-        <nut-cell title="Api" to="/api" />
-        <nut-cell title="Setting" to="/setting" />
-      </nut-cell-group>
-      <div v-if="version">
-        <div>{{ version.version }}</div>
+      <a><img src="/logo.svg" class="logo" alt="Vite logo" /></a>
+      <ul class="links">
+        <li v-for="page of routes" :class="{ active: version }">
+          <a :href="`#${page.path}`">{{page.name}}</a>
+        </li>
+      </ul>
+      <div v-if="version" style="margin-top: 80px;">
+        <div>Version: {{ version.version }}</div>
         <div v-if="version.premium" style="color: #4e8ec3;">premium</div>
       </div>
-    </div>
-    <div class="content">
       <nut-cell title="切换暗黑">
         <template v-slot:link>
           <nut-switch v-model="switchChecked" @change="switchChange" />
         </template>
       </nut-cell>
+    </div>
+    <div class="content">
+      <router-view />
     </div>
   </div>
 </template>
@@ -58,6 +57,23 @@ const switchChange = (v) => {
 
   .content {
     flex-grow: 1;
+  }
+}
+.links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    padding: 0.5em 0;
+
+    a {
+      color: #4e8ec3;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 }
 .logo {
