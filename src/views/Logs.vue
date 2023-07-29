@@ -1,6 +1,6 @@
 <script setup>
 import _ from 'lodash'
-import { ref, onUpdated, nextTick } from 'vue'
+import { ref, onBeforeUpdate, onUpdated, nextTick } from 'vue'
 import { logs } from '../api'
 
 function formatTime(ts) {
@@ -9,22 +9,21 @@ function formatTime(ts) {
 }
 
 const dom = ref(null)
-const scrollToEnd = _.throttle(() => {
-  if (dom.value) {
-    dom.value.scrollTop = dom.value.scrollHeight
-  }
-}, 100)
-onUpdated(() => nextTick(scrollToEnd))
+let shouldScroll
 
-function getLogs() {
-  return logs.value
-}
+onBeforeUpdate(() => {
+  if (dom.value) shouldScroll = dom.value.scrollHeight - dom.value.scrollTop <= dom.value.clientHeight + 10
+})
+
+onUpdated(() => nextTick(() => {
+  if (dom.value && shouldScroll) dom.value.scrollTop = dom.value.scrollHeight
+}))
 </script>
 
 <template>
   <h2>Logs</h2>
   <div class="console" ref="dom">
-    <p v-for="{ ts, type, payload } of getLogs()" :class="type"><span>[{{ formatTime(ts) }}][{{ type }}]</span> {{ payload }}</p>
+    <p v-for="{ ts, type, payload } of logs" :class="type"><span>[{{ formatTime(ts) }}][{{ type }}]</span> {{ payload }}</p>
   </div>
 </template>
 
