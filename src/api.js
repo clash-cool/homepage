@@ -66,5 +66,6 @@ async function updateLogs() {
 updateLogs()
 
 export default {
-  version() { return fetchJson('/version') }
+  version() { return fetchJson('/version') },
+  rules() { return fetchJson('/rules') },
 }
