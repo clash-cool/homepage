@@ -30,29 +30,23 @@ async function getLogs() {
   const body =  await fetchJson('/logs', {}, true)
   if (!body) return
 
-  const reader = body.getReader()
   const decoder = new TextDecoder()
-
-  let finished
-  do {
-    try {
-      const { done, value } = await reader.read()
-      finished = done
-      const lines = decoder.decode(value).split('\n')
-      for (const line of lines) {
-        if (line.trim()) {
-          const log = { ...JSON.parse(line), ts: Date.now() }
-          logs.value.push(log)
-          if (logs.value.length > 500) logs.value.shift()  
+  await new Promise((resovle, reject) => {
+    body.pipeTo(new WritableStream({
+      write(chunk) {
+        const lines = decoder.decode(chunk).split('\n')
+        for (const line of lines) {
+          if (line.trim()) {
+            const log = { ...JSON.parse(line), ts: Date.now() }
+            logs.value.push(log)
+            if (logs.value.length > 500) logs.value.shift()  
+          }
         }
-      }
-    } catch(e) {
-      console.error('Fetch logs error:', e)
-      if (!e) finished = true
-    }
-  } while(!finished && shouldFetch)
-
-  reader.cancel()
+      },
+      close() { resovle() },
+      abort(reason) { reject(reason) }
+    }))  
+  })
 }
 
 async function updateLogs() {
