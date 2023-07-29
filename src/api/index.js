@@ -1,4 +1,3 @@
-import { ref } from 'vue'
 import { fetchJson } from '@/api/common'
 
 export default {

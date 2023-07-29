@@ -57,6 +57,7 @@ const switchChange = (v) => {
 
   .content {
     flex-grow: 1;
+    overflow: hidden;
     min-height: 450px;
   }
 }
