@@ -28,6 +28,8 @@ window.addEventListener('beforeunload', () => { shouldFetch = false })
 export const logs = ref([])
 async function getLogs() {
   const body =  await fetchJson('/logs', {}, true)
+  if (!body) return
+
   const reader = body.getReader()
   const decoder = new TextDecoder()
 
@@ -46,6 +48,7 @@ async function getLogs() {
       }
     } catch(e) {
       console.error('Fetch logs error:', e)
+      if (!e) finished = true
     }
   } while(!finished && shouldFetch)
 
