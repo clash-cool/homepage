@@ -36,9 +36,14 @@ async function getLogs() {
     try {
       const { done, value } = await reader.read()
       finished = done
-      const log = { ...JSON.parse(decoder.decode(value)), ts: Date.now() }
-      logs.value.push(log)
-      if (logs.value.length > 500) logs.value.shift()
+      const lines = decoder.decode(value).split('\n')
+      for (const line of lines) {
+        if (line.trim()) {
+          const log = { ...JSON.parse(line), ts: Date.now() }
+          logs.value.push(log)
+          if (logs.value.length > 500) logs.value.shift()  
+        }
+      }
     } catch(e) {
       console.error('Fetch logs error:', e)
     }
