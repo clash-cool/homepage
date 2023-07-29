@@ -26,7 +26,7 @@ const switchChange = (v) => {
         <div>Version: {{ version.version }}</div>
         <div v-if="version.premium" style="color: #4e8ec3;">premium</div>
       </div>
-      <nut-cell title="切换暗黑">
+      <nut-cell title="Dark mode">
         <template v-slot:link>
           <nut-switch v-model="switchChecked" @change="switchChange" />
         </template>
@@ -57,6 +57,7 @@ const switchChange = (v) => {
 
   .content {
     flex-grow: 1;
+    min-height: 450px;
   }
 }
 .links {
