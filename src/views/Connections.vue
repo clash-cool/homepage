@@ -57,7 +57,7 @@ const interval = setInterval(() => api.connections().then((data) => { connection
 onUnmounted(() => clearInterval(interval))
 
 const table = ref(null)
-const height = ref(400)
+const height = ref(0)
 onUpdated(() => nextTick(() => {
   if (table.value) height.value = table.value.clientHeight
 }))
@@ -66,17 +66,19 @@ onUpdated(() => nextTick(() => {
 <template>
   <h2>Connections</h2>
   <div class="connections">
-    <table ref="table">
-      <thead>
-        <tr><th>Target</th><th>Speed</th></tr>
-      </thead>
-      <tbody>
-        <tr v-for="c of convertConnections(connections.connections)">
-          <td class="left" style="max-width: 250px;">{{ c.target }}</td>
-          <td style="max-width: 200px; min-width: 200px;">{{ speed(c) }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div>
+      <table ref="table">
+        <thead>
+          <tr><th>Target</th><th>Speed</th></tr>
+        </thead>
+        <tbody>
+          <tr v-for="c of convertConnections(connections.connections)">
+            <td class="left" style="max-width: 250px;">{{ c.target }}</td>
+            <td style="max-width: 200px; min-width: 200px;">{{ speed(c) }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <div class="details" :style="{ height: height + 'px' }">
       <table>
         <thead>
