@@ -1,5 +1,8 @@
 <script setup>
-import { ref } from 'vue'
+import { NLayout, NLayoutSider, NLayoutContent, NMenu } from 'naive-ui'
+
+import { ref, h } from 'vue'
+import { RouterLink } from 'vue-router'
 import api from './api'
 import { theme } from './settings'
 import { routes } from './routes'
@@ -11,81 +14,34 @@ const switchChecked = ref(theme.value === 'dark')
 const switchChange = (v) => {
   theme.value = v ? 'dark' : ''
 }
+
+const navOptions = routes.map(({ name, path }) => ({ label: name, key: path, path }))
+const renderMenuLabel = (option) => {
+  return h(
+    RouterLink,
+    { to: option.path },
+    { default: () => option.label }
+  )
+}
 </script>
 
 <template>
-  <div class="container">
-    <div class="nav">
+  <n-layout has-sider>
+    <n-layout-sider style="text-align: center;">
       <a><img src="/logo.svg" class="logo" alt="Vite logo" /></a>
-      <ul class="links">
-        <li v-for="page of routes" :class="{ active: page.path === $route.path }">
-          <a :href="`#${page.path}`">{{page.name}}</a>
-        </li>
-      </ul>
+      <n-menu :options="navOptions" :render-label="renderMenuLabel" :root-indent="18"></n-menu>
       <div v-if="version" style="margin-top: 80px;">
         <div>Version: {{ version.version }}</div>
         <div v-if="version.premium" style="color: #4e8ec3;">premium</div>
       </div>
-      <nut-cell title="Dark mode">
-        <template v-slot:link>
-          <nut-switch v-model="switchChecked" @change="switchChange" />
-        </template>
-      </nut-cell>
-    </div>
-    <div class="content">
+    </n-layout-sider>
+    <n-layout-content>
       <router-view />
-    </div>
-  </div>
+    </n-layout-content>
+  </n-layout>
 </template>
 
 <style scoped lang="scss">
-.container {
-  display: flex;
-  gap: 30px;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  width: 100vw;
-  max-width: 960px;
-  margin: 0 auto;
-
-  .nav {
-    width: 140px;
-    text-align: center;
-  }
-
-  .content {
-    flex-grow: 1;
-    overflow: hidden;
-    min-height: 450px;
-  }
-}
-.links {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-
-  li {
-    border-radius: 10px;
-    padding: 0.5em 0;
-
-    a {
-      color: #4e8ec3;
-      text-decoration: none;
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-
-    &.active {
-      background-color: #4e8ec3;
-      a {
-        color: #eee;
-      }
-    }
-  }
-}
 .logo {
   height: 6em;
   will-change: filter;
