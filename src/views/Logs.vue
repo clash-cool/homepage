@@ -31,17 +31,13 @@ onMounted(() => {
 
 <template>
   <h2>Logs</h2>
-  <div class="console" ref="dom">
+  <div class="console pg-content" ref="dom">
     <p v-for="{ ts, type, payload } of logs" :class="type"><span>[{{ formatTime(ts) }}][{{ type }}]</span> {{ payload }}</p>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .console {
-  height: 400px;
-  overflow-y: scroll;
-  padding: 10px;
-
   p {
     margin: 5px 0;
   }

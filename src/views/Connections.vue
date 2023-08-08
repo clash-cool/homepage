@@ -65,7 +65,7 @@ onUpdated(() => nextTick(() => {
 
 <template>
   <h2>Connections</h2>
-  <div class="connections">
+  <div class="connections pg-content">
     <div>
       <table ref="table">
         <thead>
@@ -102,10 +102,7 @@ onUpdated(() => nextTick(() => {
 
 <style lang="scss" scoped>
 .connections {
-  height: 400px;
-  width: 100%;
   overflow-x: hidden;
-
   display: flex;
 
   table {

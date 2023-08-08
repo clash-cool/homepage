@@ -8,7 +8,7 @@ api.rules().then((data) => { rules.value = data.rules })
 
 <template>
   <h2>Rules</h2>
-  <div class="rules">
+  <div class="rules pg-content">
     <table>
       <tbody>
         <tr v-for="r of rules"><td>{{ r.type }}</td><td>{{ r.payload }}</td><td>{{ r.proxy }}</td></tr>
@@ -19,9 +19,6 @@ api.rules().then((data) => { rules.value = data.rules })
 
 <style lang="scss" scoped>
 .rules {
-  height: 400px;
-  overflow-y: scroll;
-
   table {
     width: 100%;
     border-collapse: collapse;

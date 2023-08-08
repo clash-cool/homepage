@@ -35,7 +35,7 @@ const renderMenuLabel = (option) => {
         <div v-if="version.premium" style="color: #4e8ec3;">premium</div>
       </div>
     </n-layout-sider>
-    <n-layout-content>
+    <n-layout-content style="height: 100vh;">
       <router-view />
     </n-layout-content>
   </n-layout>
