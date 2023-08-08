@@ -8,5 +8,8 @@ export default defineConfig({
     alias: [
       { find: '@', replacement: __dirname + '/src' }
     ]
-  }  
+  },
+  server: {
+    port: 5174
+  }
 })
