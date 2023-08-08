@@ -29,7 +29,7 @@ const renderMenuLabel = (option) => {
   <n-layout has-sider>
     <n-layout-sider style="text-align: center;">
       <a><img src="/logo.svg" class="logo" alt="Vite logo" /></a>
-      <n-menu :options="navOptions" :render-label="renderMenuLabel" :root-indent="18"></n-menu>
+      <n-menu :options="navOptions" :render-label="renderMenuLabel" :root-indent="18" :value="$route.path"></n-menu>
       <div v-if="version" style="margin-top: 80px;">
         <div>Version: {{ version.version }}</div>
         <div v-if="version.premium" style="color: #4e8ec3;">premium</div>
