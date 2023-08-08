@@ -1,5 +1,5 @@
 <script setup>
-import { NConfigProvider, darkTheme, lightTheme } from 'naive-ui'
+import { NConfigProvider, NNotificationProvider, darkTheme, lightTheme } from 'naive-ui'
 import { theme } from './settings'
 
 import Home from './Home.vue'
@@ -8,6 +8,8 @@ import './api/logs'
 
 <template>
   <n-config-provider :theme="theme === 'dark' ? darkTheme : lightTheme">
-    <home />
+    <n-notification-provider>
+      <home />
+    </n-notification-provider>
   </n-config-provider>
 </template>

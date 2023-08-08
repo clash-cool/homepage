@@ -1,14 +1,13 @@
 import { apiSetting } from '@/settings'
 
-export async function fetchJson(url, opts = {}, stream = false) {
-  if (apiSetting.value) {
-    const { port, secret } = apiSetting.value
+export async function fetchJson(url, opts, stream = false) {
+  if (apiSetting.value || (opts && opts.secret && opts.port)) {
+    const { port, secret } = opts || apiSetting.value
     url = `http://127.0.0.1:${port}${url}`
 
     const res = await fetch(url, {
       ...opts,
       headers: {
-        ...opts.headers,
         'Authorization': secret && `Bearer ${secret}`,
         'Content-Type': 'application/json'
       } }

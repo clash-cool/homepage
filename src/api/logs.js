@@ -6,7 +6,7 @@ window.addEventListener('beforeunload', () => { shouldFetch = false })
 
 export const logs = ref([])
 async function getLogs() {
-  const body =  await fetchJson('/logs', {}, true)
+  const body =  await fetchJson('/logs', null, true)
   if (!body) return
 
   const decoder = new TextDecoder()

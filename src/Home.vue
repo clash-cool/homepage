@@ -4,16 +4,10 @@ import { NLayout, NLayoutSider, NLayoutContent, NMenu } from 'naive-ui'
 import { ref, h } from 'vue'
 import { RouterLink } from 'vue-router'
 import api from './api'
-import { theme } from './settings'
+import { version } from './settings'
 import { routes } from './routes'
 
-const version = ref(null)
 api.version().then((v) => (version.value = v))
-
-const switchChecked = ref(theme.value === 'dark')
-const switchChange = (v) => {
-  theme.value = v ? 'dark' : ''
-}
 
 const navOptions = routes.map(({ name, path }) => ({ label: name, key: path, path }))
 const renderMenuLabel = (option) => {
