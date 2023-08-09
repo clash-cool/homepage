@@ -4,4 +4,5 @@ export default {
   version(opts) { return fetchJson('/version', opts) },
   rules() { return fetchJson('/rules') },
   connections() { return fetchJson('/connections') },
+  proxies() { return fetchJson('/proxies') }
 }
