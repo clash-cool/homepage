@@ -19,8 +19,14 @@ function updateProxies() {
 updateProxies()
 const interval = setInterval(updateProxies, 1000)
 onUnmounted(() => clearInterval(interval))
+const delayMap = new Map()
 
 function getLatency(g) {
+  const testResult = delayMap.get(g.name)
+  if (testResult && Date.now() - testResult.ts < 30000) {
+    return testResult.delay
+  }
+
   const [h] = g.history || []
   if (h) return h.delay
 
@@ -33,8 +39,12 @@ function genOptions(g) {
   }))
 }
 
-function refreshDelay(e) {
+async function refreshDelay(e, g) {
   e.stopPropagation()
+  delayMap.set(g.name, { delay: -1, ts: Date.now() })
+  groups.value = groups.value.slice()
+  const { delay } = await api.proxyDelay(g.name)
+  if (delay >= 0) delayMap.set(g.name, { delay, ts: Date.now() })
 }
 </script>
 
@@ -45,7 +55,7 @@ function refreshDelay(e) {
       <n-collapse>
         <n-collapse-item v-for="g of groups" :key="g.name" :title="`${g.name} [${g.type}]`">
           <template #header-extra>
-            <latency :latency="getLatency(g)" @click="refreshDelay" />
+            <latency :latency="getLatency(g)" @click="(e) => refreshDelay(e, g)" />
           </template>
           <n-menu :options="genOptions(g)" :value="g.now"></n-menu>
         </n-collapse-item>

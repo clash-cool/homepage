@@ -12,12 +12,12 @@ function getLatencyClass(latency) {
 </script>
 
 <template>
-<n-el :class="getLatencyClass(latency)">{{ latency > 0 ? latency : '-' }}</n-el>
+<n-el :class="getLatencyClass(latency)">{{ latency > 0 ? latency : latency < 0 ? '⟳' : '-' }}</n-el>
 </template>
 
 <style scoped>
 .very-fast {
-  color: var(--n-success-color);
+  color: var(--success-color);
 }
 .fast {
   color: var(--warning-color);
