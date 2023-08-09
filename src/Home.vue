@@ -1,10 +1,10 @@
 <script setup>
 import { NLayout, NLayoutSider, NLayoutContent, NMenu } from 'naive-ui'
 
-import { ref, h } from 'vue'
+import { h } from 'vue'
 import { RouterLink } from 'vue-router'
 import api from './api'
-import { version } from './settings'
+import { version, showSidebar } from './settings'
 import { routes } from './routes'
 
 api.version().then((v) => (version.value = v))
@@ -20,8 +20,8 @@ const renderMenuLabel = (option) => {
 </script>
 
 <template>
-  <n-layout has-sider>
-    <n-layout-sider style="text-align: center;">
+  <n-layout :has-sider="showSidebar">
+    <n-layout-sider style="text-align: center;" v-if="showSidebar">
       <a><img src="/logo.svg" class="logo" alt="Vite logo" /></a>
       <n-menu :options="navOptions" :render-label="renderMenuLabel" :root-indent="18" :value="$route.path"></n-menu>
       <div v-if="version" style="margin-top: 80px;">

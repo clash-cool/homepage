@@ -1,6 +1,8 @@
 <script setup>
 import _ from 'lodash'
 import { ref, onMounted, onBeforeUpdate, onUpdated, nextTick } from 'vue'
+
+import PageTitle from '../components/PageTitle.vue'
 import { logs } from '../api/logs'
 
 function numberFormat(number) {
@@ -30,7 +32,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <h2>Logs</h2>
+  <page-title title="Logs" />
   <div class="console pg-content" ref="dom">
     <p v-for="{ ts, type, payload } of logs" :class="type"><span>[{{ formatTime(ts) }}][{{ type }}]</span> {{ payload }}</p>
   </div>

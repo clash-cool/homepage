@@ -1,5 +1,7 @@
 <script setup>
 import { ref, onUnmounted, onUpdated, nextTick } from 'vue'
+
+import PageTitle from '../components/PageTitle.vue'
 import api from '../api'
 
 const connections = ref({ downloadTotal: 0, downloadTotal: 0, connections: [] })
@@ -64,7 +66,7 @@ onUpdated(() => nextTick(() => {
 </script>
 
 <template>
-  <h2>Connections</h2>
+  <page-title title="Connections" />
   <div class="connections pg-content">
     <div>
       <table ref="table">

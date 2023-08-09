@@ -2,6 +2,7 @@
 import { ref, h, onUnmounted } from 'vue'
 import { NCard, NCollapse, NCollapseItem, NMenu, NButton } from 'naive-ui'
 
+import PageTitle from '../components/PageTitle.vue'
 import Latency from '../components/Latency.vue'
 import api from '../api'
 
@@ -52,7 +53,7 @@ async function refreshDelay(e, g) {
 </script>
 
 <template>
-  <h2>Proxies</h2>
+  <page-title title="Proxies" />
   <div class="pg-content">
     <n-card title="Proxy Groups">
       <n-collapse>

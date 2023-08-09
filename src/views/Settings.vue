@@ -1,6 +1,8 @@
 <script setup>
 import { ref, watch } from 'vue'
 import { useNotification, NCard, NGrid, NForm, NFormItemGi, NInput, NInputNumber, NSwitch, NButton } from 'naive-ui'
+
+import PageTitle from '../components/PageTitle.vue'
 import { apiSetting, theme, version } from '../settings'
 import api from '../api'
 
@@ -41,7 +43,7 @@ async function save () {
 </script>
 
 <template>
-  <h2>Settings</h2>
+  <page-title title="Settings" />
   <div class="settings pg-content">
     <n-card title="Basic Settings">
       <n-form label-placement="left">

@@ -30,7 +30,7 @@ h1, h2, h3, h4 {
 }
 
 .pg-content {
-  height: calc(100vh - 54px);
+  height: calc(100vh - 61px);
   box-sizing: border-box;
   overflow-y: scroll;
   padding: 10px;

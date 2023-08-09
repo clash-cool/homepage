@@ -1,5 +1,7 @@
 <script setup>
 import { ref } from 'vue'
+
+import PageTitle from '../components/PageTitle.vue'
 import api from '../api'
 
 const rules = ref([])
@@ -7,7 +9,7 @@ api.rules().then((data) => { rules.value = data.rules })
 </script>
 
 <template>
-  <h2>Rules</h2>
+  <page-title title="Rules" />
   <div class="rules pg-content">
     <table>
       <tbody>
