@@ -5,14 +5,17 @@ import { NCard, NCollapse, NCollapseItem, NMenu, NButton } from 'naive-ui'
 import Latency from '../components/Latency.vue'
 import api from '../api'
 
+const mode = ref('')
 const proxies = ref({})
 const groups = ref([])
+
+api.getConfigs().then(({ mode: m }) => mode.value = m)
 
 function updateProxies() {
   api.proxies().then(data => {
     proxies.value = data.proxies
     const all = Object.values(data.proxies)
-    groups.value = all.filter(p => p.all && p.now)
+    groups.value = all.filter(p => p.all && p.now && (p.name !== 'GLOBAL' || mode.value === 'global'))
   })
 }
 
