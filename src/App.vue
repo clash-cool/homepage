@@ -4,6 +4,7 @@ import { theme } from './settings'
 
 import Home from './Home.vue'
 import './api/logs'
+import './api/traffic'
 </script>
 
 <template>

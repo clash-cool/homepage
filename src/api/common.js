@@ -17,3 +17,25 @@ export async function fetchJson(url, opts, stream = false) {
     console.error('No api setting found')
   }
 }
+
+export async function fetchStream(url, handler, opts) {
+  const body =  await fetchJson(url, opts, true)
+  if (!body) return
+
+  const decoder = new TextDecoder()
+  await new Promise((resovle, reject) => {
+    body.pipeTo(new WritableStream({
+      write(chunk) {
+        const lines = decoder.decode(chunk).split('\n')
+        for (const line of lines) {
+          if (line.trim()) {
+            const json = { ...JSON.parse(line.trim()), ts: Date.now() }
+            handler(json)
+          }
+        }
+      },
+      close() { resovle() },
+      abort(reason) { reject(reason) }
+    }))  
+  })
+}
