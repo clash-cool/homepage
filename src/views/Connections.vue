@@ -35,7 +35,7 @@ function speed({ id, upload, download }) {
   }
 }
 
-function convertConnections(connections) {
+function convertConnections({ connections }) {
   return connections.map(({ id, upload, download, start, chains, rule, rulePayload, metadata: { network, type, sourceIP, destinationIP, destinationPort, host, dnsMode, processPath } }) => ({
     id,
     upload,
@@ -54,8 +54,8 @@ function convertConnections(connections) {
   })).sort((a, b) => b.duration - a.duration)
 }
 
-api.connections().then((data) => { connections.value = data })
-const interval = setInterval(() => api.connections().then((data) => { connections.value = data }), 1000)
+api.connections().then((data) => { if (data) connections.value = data })
+const interval = setInterval(() => api.connections().then((data) => { if (data) connections.value = data }), 1000)
 onUnmounted(() => clearInterval(interval))
 
 const table = ref(null)
@@ -74,7 +74,7 @@ onUpdated(() => nextTick(() => {
           <tr><th>Target</th><th>Speed</th></tr>
         </thead>
         <tbody>
-          <tr v-for="c of convertConnections(connections.connections)">
+          <tr v-for="c of convertConnections(connections)">
             <td class="left" style="max-width: 250px;">{{ c.target }}</td>
             <td style="max-width: 200px; min-width: 200px;">{{ speed(c) }}</td>
           </tr>
@@ -87,7 +87,7 @@ onUpdated(() => nextTick(() => {
           <tr><th>Download</th><th>Upload</th><th>Dur</th><th>Chain</th><th>Type</th><th>Rule</th><th></th></tr>
         </thead>
         <tbody>
-          <tr v-for="c of convertConnections(connections.connections)">
+          <tr v-for="c of convertConnections(connections)">
             <td>{{ size(c.download) }}</td>
             <td>{{ size(c.upload) }}</td>
             <td>{{ duration(c.duration) }}</td>

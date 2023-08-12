@@ -1,8 +1,15 @@
+import Stats from './views/Stats.vue'
+import Proxies from './views/Proxies.vue'
+import Logs from './views/Logs.vue'
+import Rules from './views/Rules.vue'
+import Connections from './views/Connections.vue'
+import Settings from './views/Settings.vue'
+
 export const routes = [
-  { name: 'Stats', path: '/', component: () => import('./views/Stats.vue') },
-  { name: 'Proxies', path: '/proxies', component: () => import('./views/Proxies.vue') },
-  { name: 'Logs', path: '/logs', component: () => import('./views/Logs.vue') },
-  { name: 'Rules', path: '/rules', component: () => import('./views/Rules.vue') },
-  { name: 'Connections', path: '/connections', component: () => import('./views/Connections.vue') },
-  { name: 'Settings', path: '/settings', component: () => import('./views/Settings.vue') }
+  { name: 'Stats', path: '/', component: Stats },
+  { name: 'Proxies', path: '/proxies', component: Proxies },
+  { name: 'Logs', path: '/logs', component: Logs },
+  { name: 'Rules', path: '/rules', component: Rules },
+  { name: 'Connections', path: '/connections', component: Connections },
+  { name: 'Settings', path: '/settings', component: Settings }
 ]
