@@ -1,5 +1,5 @@
 <script setup>
-import { h, ref, onUnmounted, onUpdated, nextTick } from 'vue'
+import { h, ref, onUnmounted, onUpdated, nextTick, watch } from 'vue'
 import { NDataTable } from 'naive-ui'
 
 import PageTitle from '../components/PageTitle.vue'
@@ -65,8 +65,28 @@ onUpdated(() => nextTick(() => {
   if (page.value) height.value = page.value.clientHeight
 }))
 
+function getTargetFilters() {
+  const values = new Set()
+  connections.value.connections.forEach(c => {
+    const { metadata: { host } }  = c
+    if (host) values.add(host.split('.').slice(host.endsWith('.com.cn') ? -3 : -2).join('.'))
+  })
+  return Array.from(values.keys()).sort().map(value => ({ label: value, value }))
+}
+
+watch(connections, () => {
+  columns[0].filterOptions = getTargetFilters()
+})
+
 const columns = [
-  { title: 'Target', key: 'target', ellipsis: { tooltip: true }, width: 250, fixed: 'left' },
+  {
+    title: 'Target', key: 'target',
+    ellipsis: { tooltip: true }, width: 250, fixed: 'left',
+    filterOptions: [],
+    filter(value, row) {
+      return row.target.includes(value)
+    }
+  },
   { title: 'Speed', render(row) { return speed(row) }, width: 200, align: 'center' },
   { title: 'Download', key: 'download', render(row) { return h('span', {}, size(row.download)) } },
   { title: 'Upload', key: 'upload', render(row) { return h('span', {}, size(row.upload)) } },
