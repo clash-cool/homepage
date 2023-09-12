@@ -12,8 +12,8 @@ const darkTheme = ref(theme.value === 'dark')
 watch(darkTheme, (v) => { theme.value = v ? 'dark' : 'light' })
 
 const editing = ref(false)
-const port = ref(apiSetting.value && apiSetting.value.port)
-const secret = ref(apiSetting.value && apiSetting.value.secret)
+const port = ref(apiSetting.value?.port)
+const secret = ref(apiSetting.value?.secret)
 
 async function save () {
   try {

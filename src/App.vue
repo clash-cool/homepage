@@ -1,10 +1,19 @@
 <script setup>
+import { useRoute } from 'vue-router'
 import { NConfigProvider, NNotificationProvider, darkTheme, lightTheme } from 'naive-ui'
-import { theme } from './settings'
+import { apiSetting, theme } from './settings'
 
 import Home from './Home.vue'
 import './api/logs'
 import './api/traffic'
+import { watch } from 'vue'
+
+const route = useRoute()
+watch(() => route.query, ({ port, password }) => {
+  if (port && password) {
+    apiSetting.value = { port: port * 1, secret: password }
+  }
+})
 </script>
 
 <template>
