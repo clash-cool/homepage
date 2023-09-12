@@ -59,10 +59,10 @@ api.connections().then((data) => { if (data) connections.value = data })
 const interval = setInterval(() => api.connections().then((data) => { if (data) connections.value = data }), 1000)
 onUnmounted(() => clearInterval(interval))
 
-const table = ref(null)
+const page = ref(null)
 const height = ref(0)
 onUpdated(() => nextTick(() => {
-  if (table.value) height.value = table.value.clientHeight
+  if (page.value) height.value = page.value.clientHeight
 }))
 
 const columns = [
@@ -80,12 +80,14 @@ const columns = [
 
 <template>
   <page-title title="Connections" />
-  <div class="connections pg-content">
+  <div class="connections pg-content" ref="page">
     <n-data-table
       :columns="columns"
       :data="convertConnections(connections)"
       :bordered="false"
       :scroll-x="1400"
+      :max-height="height - 60"
+      striped
     />
   </div>
 </template>
