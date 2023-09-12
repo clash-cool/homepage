@@ -1,6 +1,7 @@
 <script setup>
 import { ref, h, onUnmounted } from 'vue'
 import { NCard, NCollapse, NCollapseItem, NMenu, NButton } from 'naive-ui'
+import { sleep } from '@async-util/common'
 
 import PageTitle from '../components/PageTitle.vue'
 import Latency from '../components/Latency.vue'
@@ -12,17 +13,24 @@ const groups = ref([])
 
 api.getConfigs().then(({ mode: m }) => mode.value = m)
 
-function updateProxies() {
-  api.proxies().then(data => {
-    proxies.value = data.proxies
-    const all = Object.values(data.proxies)
-    groups.value = all.filter(p => p.all && p.now && (p.name !== 'GLOBAL' || mode.value === 'global'))
-  })
+let shouldRefresh = true
+async function updateProxies() {
+  while (shouldRefresh) {
+    try {
+      const data = await api.proxies()
+      proxies.value = data.proxies
+      const all = Object.values(data.proxies)
+      groups.value = all.filter(p => p.all && p.now && (p.name !== 'GLOBAL' || mode.value === 'global'))
+    } catch (e) {
+      console.error(e)
+    }
+    
+    await sleep(1000)
+  }
 }
 
 updateProxies()
-const interval = setInterval(updateProxies, 1000)
-onUnmounted(() => clearInterval(interval))
+onUnmounted(() => shouldRefresh = false)
 const delayMap = new Map()
 
 function getLatency(g) {
