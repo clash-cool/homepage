@@ -1,5 +1,6 @@
 <script setup>
-import { ref, onUnmounted, onUpdated, nextTick } from 'vue'
+import { h, ref, onUnmounted, onUpdated, nextTick } from 'vue'
+import { NDataTable } from 'naive-ui'
 
 import PageTitle from '../components/PageTitle.vue'
 import api from '../api'
@@ -63,42 +64,29 @@ const height = ref(0)
 onUpdated(() => nextTick(() => {
   if (table.value) height.value = table.value.clientHeight
 }))
+
+const columns = [
+  { title: 'Target', key: 'target', ellipsis: { tooltip: true }, width: 250, fixed: 'left' },
+  { title: 'Speed', render(row) { return speed(row) }, width: 200, align: 'center' },
+  { title: 'Download', key: 'download', render(row) { return h('span', {}, size(row.download)) } },
+  { title: 'Upload', key: 'upload', render(row) { return h('span', {}, size(row.upload)) } },
+  { title: 'Dur', key: 'duration', render(row) { return h('span', {}, duration(row.duration)) } },
+  { title: 'Chain', key: 'chain' },
+  { title: 'Type', key: 'type' },
+  { title: 'Rule', key: 'rule' },
+  { title: '', key: 'rulePayload', ellipsis: { tooltip: true } }
+]
 </script>
 
 <template>
   <page-title title="Connections" />
   <div class="connections pg-content">
-    <div>
-      <table ref="table">
-        <thead>
-          <tr><th>Target</th><th>Speed</th></tr>
-        </thead>
-        <tbody>
-          <tr v-for="c of convertConnections(connections)">
-            <td class="left" style="max-width: 250px;">{{ c.target }}</td>
-            <td style="max-width: 200px; min-width: 200px;">{{ speed(c) }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="details" :style="{ height: height + 'px' }">
-      <table>
-        <thead>
-          <tr><th>Download</th><th>Upload</th><th>Dur</th><th>Chain</th><th>Type</th><th>Rule</th><th></th></tr>
-        </thead>
-        <tbody>
-          <tr v-for="c of convertConnections(connections)">
-            <td>{{ size(c.download) }}</td>
-            <td>{{ size(c.upload) }}</td>
-            <td>{{ duration(c.duration) }}</td>
-            <td>{{ c.chain }}</td>
-            <td>{{ c.type }}</td>
-            <td>{{ c.rule }}</td>
-            <td>{{ c.rulePayload }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <n-data-table
+      :columns="columns"
+      :data="convertConnections(connections)"
+      :bordered="false"
+      :scroll-x="1400"
+    />
   </div>
 </template>
 
@@ -106,22 +94,6 @@ onUpdated(() => nextTick(() => {
 .connections {
   overflow-x: hidden;
   display: flex;
-
-  table {
-    border-collapse: collapse;
-
-    td {
-      padding: 5px;
-      text-align: center;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-
-      &.left {
-        text-align: left;
-      }
-    }
-  }
 
   .details {
     overflow-x: scroll;

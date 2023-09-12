@@ -1,6 +1,6 @@
 <script setup>
 import { ref, h, onUnmounted } from 'vue'
-import { NCard, NCollapse, NCollapseItem, NMenu, NButton } from 'naive-ui'
+import { NCard, NCollapse, NCollapseItem, NMenu } from 'naive-ui'
 import { sleep } from '@async-util/common'
 
 import PageTitle from '../components/PageTitle.vue'
@@ -24,7 +24,7 @@ async function updateProxies() {
     } catch (e) {
       console.error(e)
     }
-    
+
     await sleep(1000)
   }
 }
