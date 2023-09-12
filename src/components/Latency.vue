@@ -1,5 +1,4 @@
 <script setup>
-import { defineProps } from 'vue'
 import { NEl } from 'naive-ui'
 
 const props = defineProps({ latency: Number })

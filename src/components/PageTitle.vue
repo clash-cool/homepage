@@ -1,7 +1,6 @@
 <script setup>
 import { LayoutSidebarLeftCollapse, LayoutSidebarLeftExpand } from '@vicons/tabler'
 import { NPageHeader, NIcon } from 'naive-ui'
-import { defineProps } from 'vue'
 
 import { showSidebar } from '../settings'
 
