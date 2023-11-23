@@ -1,3 +1,4 @@
+import { speedtestUrl } from '../settings'
 import { fetchJson } from '@/api/common'
 
 export default {
@@ -5,7 +6,7 @@ export default {
   rules() { return fetchJson('/rules') },
   connections() { return fetchJson('/connections') },
   proxies() { return fetchJson('/proxies') },
-  proxyDelay(pxyName) { return fetchJson(`/proxies/${pxyName}/delay?timeout=30000&url=http://www.gstatic.com/generate_204`) },
+  proxyDelay(pxyName) { return fetchJson(`/proxies/${pxyName}/delay?timeout=30000&url=${speedtestUrl.value}`) },
   getConfigs() { return fetchJson('/configs') },
   queryDns(name, type = 'A') { return fetchJson(`/dns/query?name=${name}&type=${type}`) }
 }

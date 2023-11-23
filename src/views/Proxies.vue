@@ -57,6 +57,11 @@ async function refreshDelay(e, g) {
   groups.value = groups.value.slice()
   const { delay } = await api.proxyDelay(g.name)
   if (delay >= 0) delayMap.set(g.name, { delay, ts: Date.now() })
+  for (const p of g.all) {
+    delayMap.set(p, { delay: -1, ts: Date.now() })
+    const { delay } = await api.proxyDelay(p)
+    if (delay >= 0) delayMap.set(p, { delay, ts: Date.now() })
+  }
 }
 </script>
 
