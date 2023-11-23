@@ -3,7 +3,7 @@ import { ref, watch } from 'vue'
 import { useNotification, NCard, NGrid, NForm, NFormItemGi, NInput, NInputNumber, NSwitch, NButton } from 'naive-ui'
 
 import PageTitle from '../components/PageTitle.vue'
-import { apiSetting, theme, version } from '../settings'
+import { apiSetting, theme, version, speedtestUrl } from '../settings'
 import api from '../api'
 
 const notify = useNotification()
@@ -50,6 +50,11 @@ async function save () {
         <n-grid :cols="24" item-responsive>
           <n-form-item-gi label="Dark mode" span="24 500:12">
             <n-switch v-model:value="darkTheme" />
+          </n-form-item-gi>
+        </n-grid>
+        <n-grid :cols="24" item-responsive>
+          <n-form-item-gi label="Speedtest URL" span="24 500:12">
+            <n-input v-model:value="speedtestUrl" placeholder="http://www.gstatic.com/generate_204" />
           </n-form-item-gi>
         </n-grid>
         <n-grid :cols="24" :x-gap="12" item-responsive>
